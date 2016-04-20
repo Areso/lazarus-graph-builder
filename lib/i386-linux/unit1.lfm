@@ -4,5 +4,27 @@ object Form1: TForm1
   Top = 151
   Width = 320
   Caption = 'Form1'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnCreate = FormCreate
   LCLVersion = '1.4.4.0'
+  object Shape1: TShape
+    Left = 81
+    Height = 1
+    Top = 111
+    Width = 65
+    Shape = stEllipse
+  end
+  object Shape2: TShape
+    Left = 140
+    Height = 9
+    Top = 106
+    Width = 10
+  end
+  object Image1: TImage
+    Left = 8
+    Height = 216
+    Top = 8
+    Width = 282
+  end
 end
