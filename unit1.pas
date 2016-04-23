@@ -41,23 +41,23 @@ var
   MyArrayLV: integer;//Vortex count
   MyArrayLP: integer;//Path count
 begin
-  SetLength(MyArray, 3, 4);  //first numeric is the path number, second numeric
-  //is the vortex count
+  SetLength(MyArray, 3, 3);  //first numeric is the vortex number, second numeric
+  //is the path count
   MyArray[0,0]:=  1;
-  MyArray[0,1]:= -1;
+  MyArray[0,1]:=  2;
   MyArray[0,2]:=  0;
-  MyArray[0,3]:=3;
-  MyArray[1,0]:=  2;
+//  MyArray[0,3]:=3;
+  MyArray[1,0]:= -1;
   MyArray[1,1]:= -2;
-  MyArray[1,2]:=  0;
-  MyArray[1,3]:=3;
+  MyArray[1,2]:=  1;
+//  MyArray[1,3]:=3;
   MyArray[2,0]:=  0;
-  MyArray[2,1]:=  1;
+  MyArray[2,1]:=  0;
   MyArray[2,2]:= -1;
-  MyArray[2,3]:=3;
+//  MyArray[2,3]:=3;
 
-  MyArrayLP :=Length(MyArray);//Path count
-  MyArrayLV :=Length(MyArray[Low(MyArray)]); //Vortex count
+  MyArrayLV :=Length(MyArray);//Path count
+  MyArrayLP :=Length(MyArray[Low(MyArray)]); //Vortex count
   ShowMessage('Path count is '+IntToStr(MyArrayLP)+' and Vortex count is '+IntToStr(MyArrayLV));
   //Initialize our Pen step size
   PosX:=40;
