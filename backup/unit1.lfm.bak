@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 434
-  Height = 240
-  Top = 198
-  Width = 320
+  Left = 464
+  Height = 537
+  Top = 186
+  Width = 492
   Caption = 'Form1'
-  ClientHeight = 240
-  ClientWidth = 320
+  ClientHeight = 537
+  ClientWidth = 492
   OnCreate = FormCreate
   LCLVersion = '1.4.4.0'
   object Shape1: TShape
@@ -23,8 +23,8 @@ object Form1: TForm1
   end
   object Image1: TImage
     Left = 8
-    Height = 216
+    Height = 432
     Top = 8
-    Width = 282
+    Width = 440
   end
 end

@@ -34,34 +34,36 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
-  MyArray:   array of array of Integer;
-  He,Wi:     integer;
-  PosX,PosY: integer;
-  i,j:       integer;
-  MyArrayLV: integer;//Vortex count
-  MyArrayLP: integer;//Path count
+  MyArray:      array of array of Integer;
+  He,Wi:        integer;
+  PosX,PosY:    integer;
+  i,j:          integer;
+  MyArrayLV:    integer;//Vortex count
+  MyArrayLP:    integer;//Path count
+  SoV:          integer;//SizeOfVertex
 begin
   SetLength(MyArray, 3, 3);  //first numeric is the vortex number, second numeric
   //is the path count
   MyArray[0,0]:=  1;
   MyArray[0,1]:=  2;
   MyArray[0,2]:=  0;
-//  MyArray[0,3]:=3;
-  MyArray[1,0]:= -1;
-  MyArray[1,1]:= -2;
-  MyArray[1,2]:=  1;
-//  MyArray[1,3]:=3;
-  MyArray[2,0]:=  0;
-  MyArray[2,1]:=  0;
-  MyArray[2,2]:= -1;
-//  MyArray[2,3]:=3;
 
-  MyArrayLV :=Length(MyArray);//Path count
-  MyArrayLP :=Length(MyArray[Low(MyArray)]); //Vortex count
-  ShowMessage('Path count is '+IntToStr(MyArrayLP)+' and Vortex count is '+IntToStr(MyArrayLV));
+  MyArray[1,0]:= -1;
+  MyArray[1,1]:=  0;
+  MyArray[1,2]:=  1;
+
+  MyArray[2,0]:=  0;
+  MyArray[2,1]:= -2;
+  MyArray[2,2]:= -1;
+
+
+  MyArrayLV :=Length(MyArray);//Vortex count
+  MyArrayLP :=Length(MyArray[Low(MyArray)]); //Path count
+  //ShowMessage('Path count is '+IntToStr(MyArrayLP)+' and Vortex count is '+IntToStr(MyArrayLV));
   //Initialize our Pen step size
-  PosX:=40;
-  PosY:=40;
+  PosX :=0;
+  PosY :=100;
+  SoV  :=50;
 
   //check Image1.Canvas size
   He:=Image1.Height;
@@ -74,8 +76,38 @@ begin
   //changing color to red
   Image1.Canvas.Brush.Color := clRed;
   //let's begin
+
   //For MyArray[i]:=0 to
-  Image1.Canvas.Rectangle (0,0,120,8);
+
+
+  For i:=0 to 5 Do// MyArrayLV-1 Do
+  Begin
+
+    PosX := PosX+60;
+    if (i mod 2 = 0) then
+      PosY := PosY + Round(60/2)*i
+      else
+      PosY := PosY - Round(60/2)*i;
+    Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
+  end;
+
+  For j:=0 to MyArrayLP-1 Do
+  Begin
+
+
+  end;
+
+
+  For i:=0 to MyArrayLV-1 Do
+  Begin
+    If i > 0 then
+    Begin
+      For j:=0 to MyArrayLP-1 Do
+      Begin
+
+      end;
+    end;
+  end;
 end;
 
 end.
