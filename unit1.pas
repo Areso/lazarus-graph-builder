@@ -97,6 +97,7 @@ begin
 
   end;
 
+  //Image1.Canvas.Arc(0,0, 200,200, 200,0, 0,0);
 
   For i:=0 to MyArrayLV-1 Do
   Begin

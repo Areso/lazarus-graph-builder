@@ -80,7 +80,7 @@ begin
   //For MyArray[i]:=0 to
 
 
-  For i:=0 to MyArrayLV-1 Do
+  For i:=0 to 5 Do// MyArrayLV-1 Do
   Begin
 
     PosX := PosX+60;
@@ -97,6 +97,7 @@ begin
 
   end;
 
+  Image1.Canvas.Arc(0,0, 200,200, 200,0, 0,0);
 
   For i:=0 to MyArrayLV-1 Do
   Begin
