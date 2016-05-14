@@ -42,8 +42,8 @@ var
   MyArrayLP:    integer;//Path count
   SoV:          integer;//SizeOfVertex
 begin
-  SetLength(MyArray, 3, 3);  //first numeric is the vortex number, second numeric
-  //is the path count
+  SetLength(MyArray, 3, 3);  //first numeric is the vortex number,
+  //second numeric is the path count
   MyArray[0,0]:=  1;
   MyArray[0,1]:=  2;
   MyArray[0,2]:=  0;
@@ -109,6 +109,7 @@ begin
       end;
     end;
   end;
+  //Do smth here
 end;
 
 end.
