@@ -109,6 +109,17 @@ begin
       end;
     end;
   end;
+
+  i:=0;
+  j:=0;
+  For j:=0 To MyArrayLP-1 Do
+  Begin
+    For i:=0 To MyArrayLV-1 Do
+    Begin
+      //draw vortexes
+      //draw arcs
+    end;
+  end;
   //Do smth here
 end;
 
