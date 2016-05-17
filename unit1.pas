@@ -79,7 +79,7 @@ begin
 
   //For MyArray[i]:=0 to
 
-
+ {
   For i:=0 to 5 Do// MyArrayLV-1 Do
   Begin
 
@@ -90,7 +90,7 @@ begin
       PosY := PosY - Round(60/2)*i;
     Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
   end;
-
+  }
   For j:=0 to MyArrayLP-1 Do
   Begin
 
@@ -116,7 +116,17 @@ begin
   Begin
     For i:=0 To MyArrayLV-1 Do
     Begin
+    if j=0 then
+    begin
+
       //draw vortexes
+      PosX := PosX+60;
+      if (i mod 2 = 0) then
+        PosY := PosY + Round(60/2)*i
+        else
+        PosY := PosY - Round(60/2)*i;
+      Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
+    end;
       //draw arcs
     end;
   end;
