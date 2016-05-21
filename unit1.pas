@@ -40,9 +40,8 @@ var
   i,j:          integer;
   MyArrayLV:    integer;//Vortex count
   MyArrayLP:    integer;//Path count
-  MyArrayLV0X:  integer;//Vortex X coord
-  MyArrayLV0Y:  integer;//Vortex Y coord
-  MyArrayLP:    integer;//Path count
+  MyArrayLV0X:  array of integer;//Vortex X coord
+  MyArrayLV0Y:  array of integer;//Vortex Y coord
   SoV:          integer;//SizeOfVertex
 begin
   SetLength(MyArray, 3, 3);  //first numeric is the vortex number,
@@ -61,8 +60,8 @@ begin
 
 
   MyArrayLV   :=Length(MyArray);//Vortex count
-  MyArrayLV0X :=Length(MyArray);//Vortex count
-  MyArrayLV0Y :=Length(MyArray);//Vortex count
+  SetLength(MyArrayLV0X, Length(MyArray));
+  SetLength(MyArrayLV0Y, Length(MyArray));
   MyArrayLP   :=Length(MyArray[Low(MyArray)]); //Path count
   //ShowMessage('Path count is '+IntToStr(MyArrayLP)+' and Vortex count is '+IntToStr(MyArrayLV));
   //Initialize our Pen step size
@@ -106,10 +105,17 @@ begin
 
       //draw vortexes
       PosX := PosX+60;
+      MyArrayLV0X[i]:= PosX;
       if (i mod 2 = 0) then
-        PosY := PosY + Round(60/2)*i
+      begin
+        PosY := PosY + Round(60/2)*i;
+        MyArrayLV0Y[i]:= PosY;
+      end
         else
+      begin
         PosY := PosY - Round(60/2)*i;
+        MyArrayLV0Y[i]:= PosY;
+      end;
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
     end;
       //draw arcs
