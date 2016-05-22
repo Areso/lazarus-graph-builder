@@ -118,7 +118,7 @@ begin
       end;
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
     end;
-      //draw arcs
+      //draw arcs there
     end;
   end;
   //Do smth here
