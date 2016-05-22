@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Grids;
+  Grids, StdCtrls;
 
 type
 
@@ -14,6 +14,7 @@ type
 
   TForm1 = class(TForm)
     Image1: TImage;
+    Memo1: TMemo;
     Shape1: TShape;
     Shape2: TShape;
     procedure FormCreate(Sender: TObject);
@@ -93,7 +94,6 @@ begin
   //Image1.Canvas.Arc(0,0, 200,200, 200,0, 0,0);
 
 
-
   i:=0;
   j:=0;
   For j:=0 To MyArrayLP-1 Do
@@ -106,16 +106,20 @@ begin
       //draw vortexes
       PosX := PosX+60;
       MyArrayLV0X[i]:= PosX;
+      Memo1.Text:= Memo1.Text+'vortex '+IntToStr(i)+' x coord is '+IntToStr(MyArrayLV0X[i]);
       if (i mod 2 = 0) then
       begin
         PosY := PosY + Round(60/2)*i;
         MyArrayLV0Y[i]:= PosY;
+        Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
       end
         else
       begin
         PosY := PosY - Round(60/2)*i;
         MyArrayLV0Y[i]:= PosY;
+        Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
       end;
+      Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
     end;
       //draw arcs there
