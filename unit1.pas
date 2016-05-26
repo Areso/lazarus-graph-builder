@@ -91,7 +91,7 @@ begin
 
   end;
 
-  //Image1.Canvas.Arc(0,0, 200,200, 200,0, 0,0);
+
 
 
   i:=0;
@@ -100,29 +100,33 @@ begin
   Begin
     For i:=0 To MyArrayLV-1 Do
     Begin
-    if j=0 then
-    begin
+      if j=0 then
+      begin
 
-      //draw vortexes
-      PosX := PosX+60;
-      MyArrayLV0X[i]:= PosX;
-      Memo1.Text:= Memo1.Text+'vortex '+IntToStr(i)+' x coord is '+IntToStr(MyArrayLV0X[i]);
-      if (i mod 2 = 0) then
-      begin
-        PosY := PosY + Round(60/2)*i;
-        MyArrayLV0Y[i]:= PosY;
-        Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
-      end
-        else
-      begin
-        PosY := PosY - Round(60/2)*i;
-        MyArrayLV0Y[i]:= PosY;
-        Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
-      end;
+        //draw vortexes
+        PosX := PosX+60;
+        MyArrayLV0X[i]:= PosX;
+        Memo1.Text:= Memo1.Text+'vortex '+IntToStr(i)+' x coord is '+IntToStr(MyArrayLV0X[i]);
+        if (i mod 2 = 0) then
+        begin
+          PosY := PosY + Round(60/2)*i;
+          MyArrayLV0Y[i]:= PosY;
+          Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
+        end
+          else
+        begin
+          PosY := PosY - Round(60/2)*i;
+          MyArrayLV0Y[i]:= PosY;
+          Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
+        end;
       Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
-    end;
-      //draw arcs there
+      end;
+      if i>0 then
+      begin
+        //draw arcs there
+        Image1.Canvas.Line(MyArrayLV0X[i-1],MyArrayLV0Y[i-1], MyArrayLV0X[i],MyArrayLV0Y[i]);
+      end;
     end;
   end;
   //Do smth here
