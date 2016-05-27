@@ -122,7 +122,7 @@ begin
       Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
       end;
-      if i>0 then
+      if (i>0) and (MyArray[j,i]<>0) and (MyArray[j,i-1]<>0) then
       begin
         //draw arcs there
         Image1.Canvas.Line(MyArrayLV0X[i-1],MyArrayLV0Y[i-1], MyArrayLV0X[i],MyArrayLV0Y[i]);
