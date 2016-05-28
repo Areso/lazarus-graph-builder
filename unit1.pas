@@ -38,7 +38,7 @@ var
   MyArray:      array of array of Integer;
   He,Wi:        integer;
   PosX,PosY:    integer;
-  i,j:          integer;
+  i,j,jj:       integer;
   MyArrayLV:    integer;//Vortex count
   MyArrayLP:    integer;//Path count
   MyArrayLV0X:  array of integer;//Vortex X coord
@@ -122,10 +122,13 @@ begin
       Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
       end;
-      if (i>0) and (MyArray[j,i]<>0) and (MyArray[j,i-1]<>0) then
+      if (j>0) then // and (MyArray[i,j]<>0) and (MyArray[i,j-1]<>0) then
       begin
         //draw arcs there
-        Image1.Canvas.Line(MyArrayLV0X[i-1],MyArrayLV0Y[i-1], MyArrayLV0X[i],MyArrayLV0Y[i]);
+        jj=j;
+        ShowMessage('MyArray['+IntToStr(j)+IntToStr(i)+'] is '+IntToStr(MyArray[j,i])
+        +' , and MyArray['+IntToStr(j-1)+IntToStr(i)+'] is '+IntToStr(MyArray[j-1,i]));
+        Image1.Canvas.Line(MyArrayLV0X[j-1],MyArrayLV0Y[j-1], MyArrayLV0X[j],MyArrayLV0Y[j]);
       end;
     end;
   end;
