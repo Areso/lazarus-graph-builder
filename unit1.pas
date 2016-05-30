@@ -122,10 +122,11 @@ begin
       Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
       end;
-      if (j>0) then // and (MyArray[i,j]<>0) and (MyArray[i,j-1]<>0) then
+      if (j>0) then
       begin
         //draw arcs there
         //make there are a cycle with downto from jj=j to jj=0 and then comarsion
+        // and (MyArray[i,j]<>0) and (MyArray[i,j-1]<>0) then
         jj=j;
         ShowMessage('MyArray['+IntToStr(j)+IntToStr(i)+'] is '+IntToStr(MyArray[j,i])
         +' , and MyArray['+IntToStr(j-1)+IntToStr(i)+'] is '+IntToStr(MyArray[j-1,i]));
