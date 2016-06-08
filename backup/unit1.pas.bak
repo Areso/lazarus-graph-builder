@@ -38,7 +38,7 @@ var
   MyArray:      array of array of Integer;
   He,Wi:        integer;
   PosX,PosY:    integer;
-  i,j,jj:       integer;
+  i,j,jj, jjc:  integer;
   MyArrayLV:    integer;//Vortex count
   MyArrayLP:    integer;//Path count
   MyArrayLV0X:  array of integer;//Vortex X coord
@@ -82,18 +82,6 @@ begin
   Image1.Canvas.Brush.Color := clRed;
   //let's begin
 
-  //For MyArray[i]:=0 to
-
-
-  For j:=0 to MyArrayLP-1 Do
-  Begin
-
-
-  end;
-
-
-
-
   i:=0;
   j:=0;
   For j:=0 To MyArrayLP-1 Do
@@ -102,7 +90,6 @@ begin
     Begin
       if j=0 then
       begin
-
         //draw vortexes
         PosX := PosX+60;
         MyArrayLV0X[i]:= PosX;
@@ -122,15 +109,26 @@ begin
       Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
       end;
+      //check paths and draw lines between vortexes
       if (j>0) then
       begin
         //draw arcs there
         //make there are a cycle with downto from jj=j to jj=0 and then comarsion
         // and (MyArray[i,j]<>0) and (MyArray[i,j-1]<>0) then
-        jj=j;
+        //may be drop it? and do something with hammer and nails?
+        jj:=j;
         ShowMessage('MyArray['+IntToStr(j)+IntToStr(i)+'] is '+IntToStr(MyArray[j,i])
         +' , and MyArray['+IntToStr(j-1)+IntToStr(i)+'] is '+IntToStr(MyArray[j-1,i]));
-        Image1.Canvas.Line(MyArrayLV0X[j-1],MyArrayLV0Y[j-1], MyArrayLV0X[j],MyArrayLV0Y[j]);
+        For jjc:=jj-1 DownTo 0 Do
+        begin
+          if (MyArray[jj,i]=(-1)*MyArray[jjc,i]) Then
+          begin
+            ShowMessage('Aye, captain!');
+            ShowMessage('MyArray['+IntToStr(jj)+IntToStr(i)+'] is '+IntToStr(MyArray[jj,i])
+            +' , and MyArray['+IntToStr(jjc)+IntToStr(i)+'] is '+IntToStr(MyArray[jjc,i]));
+            //Image1.Canvas.Line(MyArrayLV0X[j-1],MyArrayLV0Y[j-1], MyArrayLV0X[j],MyArrayLV0Y[j]);
+          end;
+        end;
       end;
     end;
   end;
