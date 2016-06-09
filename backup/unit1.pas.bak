@@ -44,6 +44,8 @@ var
   MyArrayLV0X:  array of integer;//Vortex X coord
   MyArrayLV0Y:  array of integer;//Vortex Y coord
   SoV:          integer;//SizeOfVertex
+  SignX, SignY: integer;
+
 begin
   SetLength(MyArray, 3, 3);  //first numeric is the vortex number,
   //second numeric is the path count
@@ -53,11 +55,11 @@ begin
 
   MyArray[1,0]:= -1;
   MyArray[1,1]:=  0;
-  MyArray[1,2]:=  1;
+  MyArray[1,2]:=  1;//1
 
   MyArray[2,0]:=  0;
   MyArray[2,1]:= -2;
-  MyArray[2,2]:= -1;
+  MyArray[2,2]:= -1;//-1
 
 
   MyArrayLV   :=Length(MyArray);//Vortex count
@@ -109,30 +111,52 @@ begin
       Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
       end;
+
       //check paths and draw lines between vortexes
       if (j>0) then
       begin
-        //draw arcs there
-        //make there are a cycle with downto from jj=j to jj=0 and then comarsion
-        // and (MyArray[i,j]<>0) and (MyArray[i,j-1]<>0) then
-        //may be drop it? and do something with hammer and nails?
         jj:=j;
-        ShowMessage('MyArray['+IntToStr(j)+IntToStr(i)+'] is '+IntToStr(MyArray[j,i])
-        +' , and MyArray['+IntToStr(j-1)+IntToStr(i)+'] is '+IntToStr(MyArray[j-1,i]));
+        //ShowMessage('MyArray['+IntToStr(j)+IntToStr(i)+'] is '+IntToStr(MyArray[j,i])
+          //+' , and MyArray['+IntToStr(j-1)+IntToStr(i)+'] is '+IntToStr(MyArray[j-1,i]));
         For jjc:=jj-1 DownTo 0 Do
         begin
-          if (MyArray[jj,i]=(-1)*MyArray[jjc,i]) Then
+          if (MyArray[jj,i]=(-1)*MyArray[jjc,i]) and  (MyArray[jj,i]<>0) Then
           begin
-            ShowMessage('Aye, captain!');
-            ShowMessage('MyArray['+IntToStr(jj)+IntToStr(i)+'] is '+IntToStr(MyArray[jj,i])
-            +' , and MyArray['+IntToStr(jjc)+IntToStr(i)+'] is '+IntToStr(MyArray[jjc,i]));
-            //Image1.Canvas.Line(MyArrayLV0X[j-1],MyArrayLV0Y[j-1], MyArrayLV0X[j],MyArrayLV0Y[j]);
+            //ShowMessage('MyArray['+IntToStr(jj)+IntToStr(i)+'] is '+IntToStr(MyArray[jj,i])
+              //+' , and MyArray['+IntToStr(jjc)+IntToStr(i)+'] is '+IntToStr(MyArray[jjc,i]));
+            Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc],MyArrayLV0Y[jjc]);
+            //Write here Path number under the Line
+            if (MyArray[jj,i]>0) Then
+            begin//not tested yet
+              ShowMessage('C-C-Plus');
+              if (MyArrayLV0X[jjc]<MyArrayLV0X[jj]) then
+                SignX:= -1
+                else
+                SignX:= +1;
+              if (MyArrayLV0Y[jjc]<MyArrayLV0Y[jj]) then
+                SignY:= -1
+                else
+                SignY:= +1;
+              Image1.Canvas.Rectangle(MyArrayLV0X[jjc],MyArrayLV0Y[jjc],MyArrayLV0X[jjc]+SignX*5,MyArrayLV0Y[jjc]+SignY*5);//not tested yet
+            end
+            else
+            begin
+              ShowMessage('C-C-Minus');
+              if (MyArrayLV0X[jjc]<MyArrayLV0X[jj]) then
+                SignX:= -1
+                else
+                SignX:= +1;
+              if (MyArrayLV0Y[jjc]<MyArrayLV0Y[jj]) then
+                SignY:= -1
+                else
+                SignY:= +1;
+              Image1.Canvas.Rectangle(MyArrayLV0X[jj],MyArrayLV0Y[jj],MyArrayLV0X[jj]+SignX*5,MyArrayLV0Y[jj]+SignY*5);
+            end;
           end;
         end;
       end;
     end;
   end;
-  //Do smth here
 end;
 
 end.
