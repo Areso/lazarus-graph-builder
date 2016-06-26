@@ -93,6 +93,7 @@ begin
       if j=0 then
       begin
         //draw vortexes
+                //todo draw a vortex number
         PosX := PosX+60;
         MyArrayLV0X[i]:= PosX;
         Memo1.Text:= Memo1.Text+'vortex '+IntToStr(i)+' x coord is '+IntToStr(MyArrayLV0X[i]);
@@ -113,6 +114,7 @@ begin
       end;
 
       //check paths and draw lines between vortexes
+             //todo draw a path number
       if (j>0) then
       begin
         jj:=j;
@@ -124,11 +126,23 @@ begin
           begin
             //ShowMessage('MyArray['+IntToStr(jj)+IntToStr(i)+'] is '+IntToStr(MyArray[jj,i])
               //+' , and MyArray['+IntToStr(jjc)+IntToStr(i)+'] is '+IntToStr(MyArray[jjc,i]));
-            Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc],MyArrayLV0Y[jjc]);
-            //Write here Path number under the Line
+            //there draw path lines
+            //Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc],MyArrayLV0Y[jjc]);
+            if MyArrayLV0X[jj]>MyArrayLV0X[jjc] then
+            begin
+              //ShowMessage('LV0X jj > LV0X jjc'+IntToStr(MyArrayLV0X[jj])+' '+IntToStr(MyArrayLV0X[jjc]));
+              if MyArrayLV0Y[jj]>MyArrayLV0Y[jjc] then
+              Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc]+50,MyArrayLV0Y[jjc]);
+            end;
+            if MyArrayLV0X[jj]<=MyArrayLV0X[jjc] then
+            begin
+              //ShowMessage('LV0X jj <= LV0X jjc'+IntToStr(MyArrayLV0X[jj])+' '+IntToStr(MyArrayLV0X[jjc]));
+              Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc],MyArrayLV0Y[jjc]);
+            end;
+            //!! -->> Write here Path number under the Line
             if (MyArray[jj,i]>0) Then
             begin//not tested yet
-              ShowMessage('C-C-Plus');
+              //ShowMessage('C-C-Plus');
               if (MyArrayLV0X[jjc]<MyArrayLV0X[jj]) then
                 SignX:= -1
                 else
@@ -141,7 +155,7 @@ begin
             end
             else
             begin
-              ShowMessage('C-C-Minus');
+              //ShowMessage('C-C-Minus');
               if (MyArrayLV0X[jjc]<MyArrayLV0X[jj]) then
                 SignX:= -1
                 else
