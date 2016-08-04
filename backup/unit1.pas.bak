@@ -47,7 +47,7 @@ var
   SignX, SignY: integer;
 
 begin
-  SetLength(MyArray, 3, 3);  //first numeric is the vortex number,
+  SetLength(MyArray, 6, 7);  //first numeric is the vortex number,
   //second numeric is the path count
   MyArray[0,0]:=  1;
   MyArray[0,1]:=  2;
@@ -132,7 +132,7 @@ begin
             begin
               //ShowMessage('LV0X jj > LV0X jjc'+IntToStr(MyArrayLV0X[jj])+' '+IntToStr(MyArrayLV0X[jjc]));
               if MyArrayLV0Y[jj]>MyArrayLV0Y[jjc] then
-              Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc]+50,MyArrayLV0Y[jjc]);
+                 Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc]+50,MyArrayLV0Y[jjc]);
             end;
             if MyArrayLV0X[jj]<=MyArrayLV0X[jjc] then
             begin

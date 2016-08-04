@@ -5,8 +5,7 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Grids, StdCtrls;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls;
 
 type
 
@@ -15,6 +14,8 @@ type
   TForm1 = class(TForm)
     Image1: TImage;
     Memo1: TMemo;
+    Memo2: TMemo;
+    Memo3: TMemo;
     Shape1: TShape;
     Shape2: TShape;
     procedure FormCreate(Sender: TObject);
@@ -38,39 +39,82 @@ var
   MyArray:      array of array of Integer;
   He,Wi:        integer;
   PosX,PosY:    integer;
-  i,j,jj, jjc:  integer;
+  i,j,ii:       integer;
+  PathDrawed:   integer;
   MyArrayLV:    integer;//Vortex count
   MyArrayLP:    integer;//Path count
   MyArrayLV0X:  array of integer;//Vortex X coord
   MyArrayLV0Y:  array of integer;//Vortex Y coord
   SoV:          integer;//SizeOfVertex
-  SignX, SignY: integer;
 
+  BiasV:        integer;//value of vertical bias for vortexes
+  BiasH:        integer;//value of horizontal bias for vortexes
 begin
-  SetLength(MyArray, 3, 3);  //first numeric is the vortex number,
-  //second numeric is the path count
-  MyArray[0,0]:=  1;
-  MyArray[0,1]:=  2;
-  MyArray[0,2]:=  0;
 
-  MyArray[1,0]:= -1;
+  SetLength(MyArray, 6, 7);  //first numeric is the vortex number,
+  //second numeric is the path count
+  MyArray[0,0]:= -1;
+  MyArray[0,1]:= -1;
+  MyArray[0,2]:=  0;
+  MyArray[0,3]:=  0;
+  MyArray[0,4]:=  0;
+  MyArray[0,5]:=  0;
+  MyArray[0,6]:=  0;
+
+  MyArray[1,0]:=  1;
   MyArray[1,1]:=  0;
-  MyArray[1,2]:=  1;//1
+  MyArray[1,2]:= -1;
+  MyArray[1,3]:= -1;
+  MyArray[1,4]:=  0;
+  MyArray[1,5]:=  0;
+  MyArray[1,6]:=  0;
 
   MyArray[2,0]:=  0;
-  MyArray[2,1]:= -2;
-  MyArray[2,2]:= -1;//-1
+  MyArray[2,1]:=  0;
+  MyArray[2,2]:=  0;
+  MyArray[2,3]:=  1;
+  MyArray[2,4]:= -1;
+  MyArray[2,5]:= -1;
+  MyArray[2,6]:=  0;
 
+  MyArray[3,0]:=  0;
+  MyArray[3,1]:=  0;
+  MyArray[3,2]:=  0;
+  MyArray[3,3]:=  0;
+  MyArray[3,4]:=  1;
+  MyArray[3,5]:=  0;
+  MyArray[3,6]:= -1;
+
+  MyArray[4,0]:=  0;
+  MyArray[4,1]:=  0;
+  MyArray[4,2]:=  0;
+  MyArray[4,3]:=  0;
+  MyArray[4,4]:=  0;
+  MyArray[4,5]:=  1;
+  MyArray[4,6]:=  0;
+
+  MyArray[5,0]:=  0;
+  MyArray[5,1]:=  1;
+  MyArray[5,2]:=  1;
+  MyArray[5,3]:=  0;
+  MyArray[5,4]:=  0;
+  MyArray[5,5]:=  0;
+  MyArray[5,6]:=  1;
 
   MyArrayLV   :=Length(MyArray);//Vortex count
   SetLength(MyArrayLV0X, Length(MyArray));
   SetLength(MyArrayLV0Y, Length(MyArray));
   MyArrayLP   :=Length(MyArray[Low(MyArray)]); //Path count
   //ShowMessage('Path count is '+IntToStr(MyArrayLP)+' and Vortex count is '+IntToStr(MyArrayLV));
+
+  //Initialize bias value
+  BiasV :=90;
+  BiasH :=60; //60
+
   //Initialize our Pen step size
-  PosX :=0;
-  PosY :=100;
-  SoV  :=50;
+  PosX  :=-BiasH;
+  PosY  := BiasV*2;
+  SoV   := 50;
 
   //check Image1.Canvas size
   He:=Image1.Height;
@@ -93,85 +137,73 @@ begin
       if j=0 then
       begin
         //draw vortexes
-                //todo draw a vortex number
-        PosX := PosX+60;
+        PosX := PosX+BiasH;
         MyArrayLV0X[i]:= PosX;
         Memo1.Text:= Memo1.Text+'vortex '+IntToStr(i)+' x coord is '+IntToStr(MyArrayLV0X[i]);
         if (i mod 2 = 0) then
         begin
-          PosY := PosY + Round(60/2)*i;
+          //PosY := PosY + Round(BiasV/2)*i;
+          PosY := PosY + Round(BiasV/2)*i+i*i;
           MyArrayLV0Y[i]:= PosY;
           Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
         end
           else
         begin
-          PosY := PosY - Round(60/2)*i;
+          PosY := PosY - Round(BiasV/2)*i-i*i;
           MyArrayLV0Y[i]:= PosY;
           Memo1.Text:= Memo1.Text+' y coord is '+IntToStr(MyArrayLV0Y[i]);
         end;
       Memo1.Text:=Memo1.Text+Chr(13)+Chr(10);
       Image1.Canvas.Rectangle (PosX,PosY,PosX+SoV,PosY+SoV);
-      end;
-
-      //check paths and draw lines between vortexes
-             //todo draw a path number
-      if (j>0) then
-      begin
-        jj:=j;
-        //ShowMessage('MyArray['+IntToStr(j)+IntToStr(i)+'] is '+IntToStr(MyArray[j,i])
-          //+' , and MyArray['+IntToStr(j-1)+IntToStr(i)+'] is '+IntToStr(MyArray[j-1,i]));
-        For jjc:=jj-1 DownTo 0 Do
-        begin
-          if (MyArray[jj,i]=(-1)*MyArray[jjc,i]) and  (MyArray[jj,i]<>0) Then
-          begin
-            //ShowMessage('MyArray['+IntToStr(jj)+IntToStr(i)+'] is '+IntToStr(MyArray[jj,i])
-              //+' , and MyArray['+IntToStr(jjc)+IntToStr(i)+'] is '+IntToStr(MyArray[jjc,i]));
-            //there draw path lines
-            //Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc],MyArrayLV0Y[jjc]);
-            if MyArrayLV0X[jj]>MyArrayLV0X[jjc] then
-            begin
-              //ShowMessage('LV0X jj > LV0X jjc'+IntToStr(MyArrayLV0X[jj])+' '+IntToStr(MyArrayLV0X[jjc]));
-              if MyArrayLV0Y[jj]>MyArrayLV0Y[jjc] then
-                 Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc]+50,MyArrayLV0Y[jjc]);
-            end;
-            if MyArrayLV0X[jj]<=MyArrayLV0X[jjc] then
-            begin
-              //ShowMessage('LV0X jj <= LV0X jjc'+IntToStr(MyArrayLV0X[jj])+' '+IntToStr(MyArrayLV0X[jjc]));
-              Image1.Canvas.Line(MyArrayLV0X[jj],MyArrayLV0Y[jj], MyArrayLV0X[jjc],MyArrayLV0Y[jjc]);
-            end;
-            //!! -->> Write here Path number under the Line
-            if (MyArray[jj,i]>0) Then
-            begin//not tested yet
-              //ShowMessage('C-C-Plus');
-              if (MyArrayLV0X[jjc]<MyArrayLV0X[jj]) then
-                SignX:= -1
-                else
-                SignX:= +1;
-              if (MyArrayLV0Y[jjc]<MyArrayLV0Y[jj]) then
-                SignY:= -1
-                else
-                SignY:= +1;
-              Image1.Canvas.Rectangle(MyArrayLV0X[jjc],MyArrayLV0Y[jjc],MyArrayLV0X[jjc]+SignX*5,MyArrayLV0Y[jjc]+SignY*5);//not tested yet
-            end
-            else
-            begin
-              //ShowMessage('C-C-Minus');
-              if (MyArrayLV0X[jjc]<MyArrayLV0X[jj]) then
-                SignX:= -1
-                else
-                SignX:= +1;
-              if (MyArrayLV0Y[jjc]<MyArrayLV0Y[jj]) then
-                SignY:= -1
-                else
-                SignY:= +1;
-              Image1.Canvas.Rectangle(MyArrayLV0X[jj],MyArrayLV0Y[jj],MyArrayLV0X[jj]+SignX*5,MyArrayLV0Y[jj]+SignY*5);
-            end;
-          end;
-        end;
+      Image1.Canvas.TextOut(PosX+5,PosY+5,IntToStr(i));
       end;
     end;
   end;
-end;
 
+
+  i:=0;
+  j:=0;
+  For i:=0 To MyArrayLP-1 Do
+  begin
+    For j:=0 To MyArrayLV-1 Do
+    begin
+       Memo2.Text:=Memo2.Text+' '+IntToStr(MyArray[j,i]);
+    end;
+    Memo2.Text:=Memo2.Text+Chr(13)+Chr(10);
+  end;
+
+  i:=0;
+  j:=0;
+  For i:=0 To MyArrayLV-1 Do
+  begin
+    For j:=0 To MyArrayLP-1 Do
+    begin
+       Memo3.Text:=Memo3.Text+' '+IntToStr(MyArray[i,j]);
+    end;
+    Memo3.Text:=Memo3.Text+Chr(13)+Chr(10);
+  end;
+
+  i:=0;
+  j:=0;
+  ii:=0;
+  PathDrawed:=0;
+
+  For i:=0 To MyArrayLV-2 Do
+  begin
+    For j:=0 To MyArrayLP-1 Do
+    begin
+       for ii:=i to MyArrayLV-1 Do
+       begin
+           if (MyArray[i,j]=(-1)*MyArray[ii,j]) and (MyArray[i,j]<>0) then
+           begin
+             //ShowMessage(IntToStr(i)+' '+IntToStr(j)+'and compared with '+IntToStr(ii)+IntToStr(j));
+             PathDrawed:=PathDrawed+1;
+             Image1.Canvas.Line(MyArrayLV0X[i],MyArrayLV0Y[i],MyArrayLV0X[ii],MyArrayLV0Y[ii]);
+           end;
+         end;
+       end;
+    end;
+ //ShowMessage(IntToStr(PathDrawed));
+ end;
 end.
 
