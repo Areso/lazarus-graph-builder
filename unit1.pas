@@ -36,8 +36,8 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
-  MyArray:      array of array of Integer;
-  He,Wi:        integer;
+  MyArray:      array of array of Integer;//it's our main bidimensional array
+  He,Wi:        integer; //Image1.Canvas.Height and Image1.Canvas.Width
   PosX,PosY:    integer;
   i,j,ii:       integer;
   PathDrawed:   integer;
@@ -50,62 +50,35 @@ var
   BiasV:        integer;//value of vertical bias for vortexes
   BiasH:        integer;//value of horizontal bias for vortexes
   BiasVL:       integer;//value of vertical bias for paths (lines)
+
+  f_matrix:     textfile;
 begin
   Randomize();
-  SetLength(MyArray, 6, 7);  //first numeric is the vortex number,
-  //second numeric is the path count
-  MyArray[0,0]:= -1;
-  MyArray[0,1]:= -1;
-  MyArray[0,2]:=  0;
-  MyArray[0,3]:=  0;
-  MyArray[0,4]:=  0;
-  MyArray[0,5]:=  0;
-  MyArray[0,6]:=  0;
+  try
+    AssignFile(f_matrix, 'matrix'+'.txt');
+    reset(f_matrix);
+    readln(f_matrix, MyArrayLV);
+    readln(f_matrix, MyArrayLP);
+    SetLength(MyArray, MyArrayLV, MyArrayLP);
+    //first numeric is the vortex number,
+    //second numeric is the path count
+    i:=0;
+    j:=0;
+    for i:=0 to MyArrayLV-1 do
+        for j:=0 to MyArrayLP-1 do
+            begin
+            Read(f_matrix, MyArray[i,j]);
+            end;
+  except
+    //somewhat went wrong there
+    ShowMessage('file not found or something wrong with file');
+    CloseFile(f_matrix);
+  end;
 
-  MyArray[1,0]:=  1;
-  MyArray[1,1]:=  0;
-  MyArray[1,2]:= -1;
-  MyArray[1,3]:= -1;
-  MyArray[1,4]:=  0;
-  MyArray[1,5]:=  0;
-  MyArray[1,6]:=  0;
-
-  MyArray[2,0]:=  0;
-  MyArray[2,1]:=  0;
-  MyArray[2,2]:=  0;
-  MyArray[2,3]:=  1;
-  MyArray[2,4]:= -1;
-  MyArray[2,5]:= -1;
-  MyArray[2,6]:=  0;
-
-  MyArray[3,0]:=  0;
-  MyArray[3,1]:=  0;
-  MyArray[3,2]:=  0;
-  MyArray[3,3]:=  0;
-  MyArray[3,4]:=  1;
-  MyArray[3,5]:=  0;
-  MyArray[3,6]:= -1;
-
-  MyArray[4,0]:=  0;
-  MyArray[4,1]:=  0;
-  MyArray[4,2]:=  0;
-  MyArray[4,3]:=  0;
-  MyArray[4,4]:=  0;
-  MyArray[4,5]:=  1;
-  MyArray[4,6]:=  0;
-
-  MyArray[5,0]:=  0;
-  MyArray[5,1]:=  1;
-  MyArray[5,2]:=  1;
-  MyArray[5,3]:=  0;
-  MyArray[5,4]:=  0;
-  MyArray[5,5]:=  0;
-  MyArray[5,6]:=  1;
-
+  MyArrayLP   :=Length(MyArray[Low(MyArray)]); //Path count
   MyArrayLV   :=Length(MyArray);//Vortex count
   SetLength(MyArrayLV0X, Length(MyArray));
   SetLength(MyArrayLV0Y, Length(MyArray));
-  MyArrayLP   :=Length(MyArray[Low(MyArray)]); //Path count
   //ShowMessage('Path count is '+IntToStr(MyArrayLP)+' and Vortex count is '+IntToStr(MyArrayLV));
 
   //Initialize bias value
