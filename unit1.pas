@@ -49,8 +49,9 @@ var
 
   BiasV:        integer;//value of vertical bias for vortexes
   BiasH:        integer;//value of horizontal bias for vortexes
+  BiasVL:       integer;//value of vertical bias for paths (lines)
 begin
-
+  Randomize();
   SetLength(MyArray, 6, 7);  //first numeric is the vortex number,
   //second numeric is the path count
   MyArray[0,0]:= -1;
@@ -198,7 +199,17 @@ begin
            begin
              //ShowMessage(IntToStr(i)+' '+IntToStr(j)+'and compared with '+IntToStr(ii)+IntToStr(j));
              PathDrawed:=PathDrawed+1;
-             Image1.Canvas.Line(MyArrayLV0X[i],MyArrayLV0Y[i],MyArrayLV0X[ii],MyArrayLV0Y[ii]);
+             BiasVL:=random(SoV);
+             Image1.Canvas.Line(MyArrayLV0X[i],MyArrayLV0Y[i],MyArrayLV0X[ii],MyArrayLV0Y[ii]+BiasVL);
+             if MyArray[i,j]>0 then
+             begin
+               //not tested there
+               Image1.Canvas.Rectangle(MyArrayLV0X[i],MyArrayLV0Y[i]+BiasVL,MyArrayLV0X[i]+5,MyArrayLV0Y[i]+5+BiasVL);
+             end;
+             if MyArray[ii,j]>0 then
+             begin
+               Image1.Canvas.Rectangle(MyArrayLV0X[ii],MyArrayLV0Y[ii]+BiasVL,MyArrayLV0X[ii]+5,MyArrayLV0Y[ii]+5+BiasVL);
+             end;
            end;
          end;
        end;
