@@ -99,7 +99,7 @@ begin
   Image1.Canvas.Rectangle (0,0,Wi,He);
 
   //changing color to red
-  Image1.Canvas.Brush.Color := clRed;
+  Image1.Canvas.Brush.Color := clRed;//Vortexes
   //let's begin
 
   i:=0;
@@ -173,7 +173,11 @@ begin
              //ShowMessage(IntToStr(i)+' '+IntToStr(j)+'and compared with '+IntToStr(ii)+IntToStr(j));
              PathDrawed:=PathDrawed+1;
              BiasVL:=random(SoV);
+             Image1.Canvas.Brush.Color := clYellow;//Paths
              Image1.Canvas.Line(MyArrayLV0X[i],MyArrayLV0Y[i],MyArrayLV0X[ii],MyArrayLV0Y[ii]+BiasVL);
+             Image1.Canvas.TextOut(Round((MyArrayLV0X[i]+MyArrayLV0X[ii])/2),
+                                   Round((MyArrayLV0Y[i]+MyArrayLV0Y[ii]+BiasVL)/2)+5,
+                                   IntToStr(j));
              if MyArray[i,j]>0 then
              begin
                //not tested there
